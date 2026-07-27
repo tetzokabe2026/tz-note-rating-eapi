@@ -7,7 +7,7 @@ OpenAPI 契約を正とし、ローカル / Docker / Google Cloud Run で同一�
 |---|---|
 | **Version** | 1.0.0 |
 | **OpenAPI** | [openapi.yaml](openapi.yaml) |
-| **API Catalog (Swagger UI)** | [docs/](docs/index.html)（GitHub Pages 公開後に閲覧） |
+| **API Catalog (Swagger UI)** | https://tetzokabe2026.github.io/tz-note-rating-eapi/ |
 | **Live API** | https://evaluation-mock-api-47730621722.asia-northeast1.run.app |
 | **企画書** | [evaluation-mock-api-v1-project-specification.md](evaluation-mock-api-v1-project-specification.md) |
 
@@ -19,9 +19,9 @@ OpenAPI 契約を正とし、ローカル / Docker / Google Cloud Run で同一�
 - 人間向けカタログ UI: [`docs/index.html`](docs/index.html)（Swagger UI）
 - GitHub Pages 用に [`docs/openapi.yaml`](docs/openapi.yaml) を同梱（ルート仕様と同期）
 
-Pages 有効化後のカタログ URL 例:
+Pages カタログ URL:
 
-`https://<owner>.github.io/tz-note-rating-eapi/`
+https://tetzokabe2026.github.io/tz-note-rating-eapi/
 
 ### カタログに含まれる情報
 
