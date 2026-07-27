@@ -1,7 +1,9 @@
 # Evaluation Mock API
 
-技術ノートを評価する Mock Experience API です。  
-OpenAPI 契約を正とし、ローカル / Docker / Google Cloud Run で同一の振る舞いを提供します。
+Mock Experience API that rates technical notes.  
+The OpenAPI contract is the source of truth; local, Docker, and Google Cloud Run share the same behavior.
+
+> 日本語: [README-JP.md](README-JP.md)
 
 | | |
 |---|---|
@@ -9,26 +11,41 @@ OpenAPI 契約を正とし、ローカル / Docker / Google Cloud Run で同一�
 | **OpenAPI** | [openapi.yaml](openapi.yaml) |
 | **API Catalog (Swagger UI)** | https://tetzokabe2026.github.io/tz-note-rating-eapi/ |
 | **Live API** | https://evaluation-mock-api-47730621722.asia-northeast1.run.app |
-| **企画書** | [evaluation-mock-api-v1-project-specification.md](evaluation-mock-api-v1-project-specification.md) |
+| **Specification** | [evaluation-mock-api-v1-project-specification.md](evaluation-mock-api-v1-project-specification.md) |
 
 ## API Catalog
 
-このリポジトリは API カタログとしても使えるよう整備しています。
+This repository is published as an API catalog:
 
-- 契約の単一ソース: ルートの [`openapi.yaml`](openapi.yaml)
-- 人間向けカタログ UI: [`docs/index.html`](docs/index.html)（Swagger UI）
-- GitHub Pages 用に [`docs/openapi.yaml`](docs/openapi.yaml) を同梱（ルート仕様と同期）
+| Asset | Role |
+|-------|------|
+| [`openapi.yaml`](openapi.yaml) | Canonical API contract (OpenAPI 3.0.3) |
+| [`docs/index.html`](docs/index.html) | Human-readable catalog UI (Swagger UI) |
+| [`docs/openapi.yaml`](docs/openapi.yaml) | Spec copy served by GitHub Pages (keep in sync with root) |
 
-Pages カタログ URL:
+**Catalog URL:** https://tetzokabe2026.github.io/tz-note-rating-eapi/
 
-https://tetzokabe2026.github.io/tz-note-rating-eapi/
+### What the catalog covers
 
-### カタログに含まれる情報
+- `POST /evaluations` — create an evaluation (random ratings 1–5)
+- `GET /evaluations/{id}` — retrieve an evaluation
+- `DELETE /evaluations/{id}` — delete an evaluation
+- Request / response schemas, validation error shape, and Try it out servers (Local / Cloud Run)
 
-- `POST /evaluations` — 評価作成（ランダム 1–5）
-- `GET /evaluations/{id}` — 評価取得
-- `DELETE /evaluations/{id}` — 評価削除
-- リクエスト / レスポンススキーマ、バリデーションエラー形式、Try it out 用サーバー（Local / Cloud Run）
+### Evaluation response fields
+
+| Field | Type | Range |
+|-------|------|-------|
+| `eval-id` | string | evaluation identifier |
+| `usefulness` | integer | 1–5 |
+| `importance` | integer | 1–5 |
+| `credibility` | integer | 1–5 |
+
+### Request body (`POST /evaluations`)
+
+| Field | Type | Constraints |
+|-------|------|-------------|
+| `body` | string | required, length 20–255, no additional properties |
 
 ## Endpoints
 
@@ -37,11 +54,11 @@ https://tetzokabe2026.github.io/tz-note-rating-eapi/
 | `POST` | `/evaluations` | `201` + evaluation |
 | `GET` | `/evaluations/{id}` | `200` + evaluation |
 | `DELETE` | `/evaluations/{id}` | `204` |
-| `GET` | `/health` | `200` `{"status":"ok"}`（運用用。ビジネスリソース外） |
+| `GET` | `/health` | `200` `{"status":"ok"}` (ops only; not a business resource) |
 
-評価結果はプロセス内の **in-memory** に保持します。Cloud Run のスケールインやコールドスタートで消えます。
+Evaluations are stored **in memory** for the process lifetime. They are cleared on Cloud Run scale-in or cold start.
 
-## Quick start（Live）
+## Quick start (Live)
 
 ```bash
 BASE_URL=https://evaluation-mock-api-47730621722.asia-northeast1.run.app
@@ -50,6 +67,10 @@ curl -s -X POST "$BASE_URL/evaluations" \
   -H 'Content-Type: application/json' \
   -d '{"body":"Cursor agents execute commands in an isolated environment."}'
 ```
+
+Browse and try operations in the catalog UI:
+
+https://tetzokabe2026.github.io/tz-note-rating-eapi/
 
 ## Local development
 
@@ -61,7 +82,7 @@ npm test
 npm start
 ```
 
-Default port: `8080`（`PORT` で変更可）
+Default port: `8080` (override with `PORT`)
 
 ```bash
 curl -s -X POST http://localhost:8080/evaluations \
@@ -78,9 +99,9 @@ docker run --rm -p 8080:8080 evaluation-mock-api
 
 ## Deploy to Google Cloud Run
 
-Prerequisites: `gcloud` 認証済み、課金有効な GCP プロジェクト、Cloud Run / Cloud Build / Artifact Registry API 有効。
+Prerequisites: authenticated `gcloud`, billing-enabled GCP project, and Cloud Run / Cloud Build / Artifact Registry APIs enabled.
 
-### Option A — source deploy（推奨）
+### Option A — source deploy (recommended)
 
 ```bash
 gcloud config set project <PROJECT_ID>
@@ -95,15 +116,15 @@ gcloud run deploy evaluation-mock-api \
 
 ### Option B — Cloud Build + Artifact Registry
 
-1. Artifact Registry に Docker リポジトリ `evaluation-mock-api`（`asia-northeast1`）を作成
-2. ビルド投入:
+1. Create an Artifact Registry Docker repository named `evaluation-mock-api` in `asia-northeast1` (or change substitutions in `cloudbuild.yaml`).
+2. Submit the build:
 
 ```bash
 gcloud builds submit --config cloudbuild.yaml \
   --substitutions=SHORT_SHA=$(git rev-parse --short HEAD)
 ```
 
-デプロイ済み URL（project `http-sample-proj`, region `asia-northeast1`）:
+Deployed URL (project `http-sample-proj`, region `asia-northeast1`):
 
 `https://evaluation-mock-api-47730621722.asia-northeast1.run.app`
 
@@ -116,19 +137,20 @@ curl -s -X POST "$BASE_URL/evaluations" \
   -H 'Content-Type: application/json' \
   -d '{"body":"Cursor agents execute commands in an isolated environment."}'
 
-# レスポンスの eval-id を使う:
+# Use eval-id from the response:
 curl -s "$BASE_URL/evaluations/<eval-id>"
 curl -s -o /dev/null -w "%{http_code}\n" -X DELETE "$BASE_URL/evaluations/<eval-id>"
 ```
 
-## GitHub Pages（API カタログ公開）
+## GitHub Pages (API catalog hosting)
 
-1. リポジトリ Settings → Pages
-2. Source: **Deploy from a branch**
-3. Branch: `master` / folder: `/docs`
-4. Save 後、数分でカタログ UI が公開されます
+Configured for this repository:
 
-OpenAPI を更新したら、ルートの `openapi.yaml` を正として `docs/openapi.yaml` にも同じ内容を反映してください。
+- Branch: `master`
+- Folder: `/docs`
+- Public URL: https://tetzokabe2026.github.io/tz-note-rating-eapi/
+
+When you update the OpenAPI contract, treat the root `openapi.yaml` as canonical and sync the Pages copy:
 
 ```bash
 cp openapi.yaml docs/openapi.yaml
@@ -136,6 +158,6 @@ cp openapi.yaml docs/openapi.yaml
 
 ## Notes
 
-- 認証なし（Cloud Run `--allow-unauthenticated`）
-- DB なし（データはインスタンス単位で揮発）
-- Git ブランチ方針: `master` のみ
+- No authentication (Cloud Run `--allow-unauthenticated`)
+- No database (data is ephemeral per instance)
+- Git branch policy: `master` only
