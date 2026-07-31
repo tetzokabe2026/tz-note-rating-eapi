@@ -1,16 +1,20 @@
 openapi: 3.0.3
 info:
   title: Evaluation Mock API
-  version: 1.0.1
+  version: 1.1.0
   description: >
     Mock Experience API that returns random five-level ratings
-    (usefulness, importance, credibility) for technical notes.
+    (usefulness, importance, credibility, vocabulary-richness) for technical notes.
+
+    IMPORTANT: The Cloud Run URL is Production. Do NOT use Production for
+    application development or integration testing. USE the Prism mock server
+    for application development and testing.
 
 servers:
-  - url: http://localhost:8080
-    description: Local development
+  - url: https://evaluation-oas-prism-i7pbbhm3ja-an.a.run.app
+    description: Prism mock — USE THIS for application development and testing
   - url: https://evaluation-mock-api-47730621722.asia-northeast1.run.app
-    description: Google Cloud Run
+    description: Cloud Run Production — DO NOT use for application development or testing
 
 paths:
   /evaluations:
@@ -37,6 +41,7 @@ paths:
                 usefulness: 4
                 importance: 2
                 credibility: 5
+                vocabulary-richness: 3
         '400':
           description: Validation error
           content:
@@ -75,6 +80,7 @@ paths:
                 usefulness: 3
                 importance: 5
                 credibility: 4
+                vocabulary-richness: 2
         '404':
           description: Evaluation not found
           content:
@@ -117,6 +123,7 @@ components:
         - usefulness
         - importance
         - credibility
+        - vocabulary-richness
       properties:
         eval-id:
           type: string
@@ -137,6 +144,12 @@ components:
           minimum: 1
           maximum: 5
           example: 5
+        vocabulary-richness:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Vocabulary richness rating.
+          example: 3
 
     ValidationError:
       type: object
