@@ -363,6 +363,7 @@ It must define:
 - Usefulness rating
 - Importance rating
 - Credibility rating
+- Vocabulary Richness rating
 - Rating minimum of 1
 - Rating maximum of 5
 - Validation error response
@@ -398,7 +399,7 @@ The OpenAPI definition is complete when:
 - `body` has `minLength: 20`.
 - `body` has `maxLength: 255`.
 - POST and GET responses contain `eval-id`.
-- The three ratings are integers from 1 to 5.
+- The four ratings are integers from 1 to 5.
 - A structured `400 Validation Error` response is defined.
 - No real implementation is required.
 - No database, SAPI, external API, framework, runtime, or container is specified.
