@@ -4,7 +4,7 @@ info:
   version: 1.0.1
   description: >
     Mock Experience API that returns random five-level ratings
-    (usefulness, importance, credibility) for technical notes.
+    (usefulness, importance, credibility, elegance) for technical notes.
 
     IMPORTANT: The Cloud Run URL is Production. Do NOT use Production for
     application development or integration testing. USE the Prism mock server
@@ -41,6 +41,7 @@ paths:
                 usefulness: 4
                 importance: 2
                 credibility: 5
+                elegance: 3
         '400':
           description: Validation error
           content:
@@ -79,6 +80,7 @@ paths:
                 usefulness: 3
                 importance: 5
                 credibility: 4
+                elegance: 2
         '404':
           description: Evaluation not found
           content:
@@ -121,6 +123,7 @@ components:
         - usefulness
         - importance
         - credibility
+        - elegance
       properties:
         eval-id:
           type: string
@@ -141,6 +144,11 @@ components:
           minimum: 1
           maximum: 5
           example: 5
+        elegance:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 3
 
     ValidationError:
       type: object
