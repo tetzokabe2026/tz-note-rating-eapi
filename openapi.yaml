@@ -4,7 +4,7 @@ info:
   version: 1.0.1
   description: >
     Mock Experience API that returns random five-level ratings
-    (usefulness, importance, credibility) for technical notes.
+    (usefulness, importance, credibility, elegance) for technical notes.
 
     IMPORTANT: The Cloud Run URL is Production. Do NOT use Production for
     application development or integration testing. USE the Prism mock server
@@ -17,6 +17,19 @@ servers:
     description: Cloud Run Production — DO NOT use for application development or testing
 
 paths:
+  /version:
+    get:
+      summary: Get the version of the API
+      operationId: getVersion
+      responses:
+        '200':
+          description: Version found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Version'
+              example:
+                version: 1.0.1
   /evaluations:
     post:
       summary: Create a mock evaluation
@@ -41,6 +54,7 @@ paths:
                 usefulness: 4
                 importance: 2
                 credibility: 5
+                elegance: 3
         '400':
           description: Validation error
           content:
@@ -79,6 +93,7 @@ paths:
                 usefulness: 3
                 importance: 5
                 credibility: 4
+                elegance: 2
         '404':
           description: Evaluation not found
           content:
@@ -113,6 +128,17 @@ components:
           description: Technical note text to be evaluated.
           example: Cursor agents execute commands in an isolated environment.
 
+    Version:
+      type: object
+      additionalProperties: false
+      required:
+        - version
+      properties:
+        version:
+          type: string
+          description: API version from the OpenAPI contract.
+          example: 1.0.1
+
     Evaluation:
       type: object
       additionalProperties: false
@@ -121,6 +147,7 @@ components:
         - usefulness
         - importance
         - credibility
+        - elegance
       properties:
         eval-id:
           type: string
@@ -141,6 +168,11 @@ components:
           minimum: 1
           maximum: 5
           example: 5
+        elegance:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 3
 
     ValidationError:
       type: object

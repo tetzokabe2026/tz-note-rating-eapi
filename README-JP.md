@@ -39,6 +39,7 @@ OpenAPI 契約を正とします。
 | `usefulness` | integer | 1–5 |
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
+| `elegance` | integer | 1–5 |
 
 ## Endpoints
 
@@ -47,6 +48,7 @@ OpenAPI 契約を正とします。
 | `POST` | `/evaluations` | `201` + evaluation |
 | `GET` | `/evaluations/{id}` | `200` + evaluation |
 | `DELETE` | `/evaluations/{id}` | `204` |
+| `GET` | `/version` | `200` `{"version":"1.0.1"}` |
 | `GET` | `/health` | `200` `{"status":"ok"}`（運用用） |
 
 ## Quick start（Prism MOCK）

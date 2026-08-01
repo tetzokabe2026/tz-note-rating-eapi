@@ -28,6 +28,12 @@ describe('Evaluation Mock API', () => {
     assert.deepEqual(res.body, { status: 'ok' });
   });
 
+  it('GET /version returns API version', async () => {
+    const res = await request(app).get('/version');
+    assert.equal(res.status, 200);
+    assert.deepEqual(res.body, { version: '1.0.1' });
+  });
+
   it('POST /evaluations creates an evaluation and GET returns the same', async () => {
     const createRes = await request(app)
       .post('/evaluations')
@@ -39,6 +45,7 @@ describe('Evaluation Mock API', () => {
     assertRating(createRes.body.usefulness);
     assertRating(createRes.body.importance);
     assertRating(createRes.body.credibility);
+    assertRating(createRes.body.elegance);
 
     const getRes = await request(app).get(`/evaluations/${createRes.body['eval-id']}`);
     assert.equal(getRes.status, 200);
