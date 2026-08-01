@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Evaluation Mock API
-  version: 1.0.1
+  version: 1.0.2
   description: >
     Mock Experience API that returns random five-level ratings
     (usefulness, importance, credibility, elegance) for technical notes.
@@ -29,7 +29,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Version'
               example:
-                version: 1.0.1
+                version: 1.0.2
   /evaluations:
     post:
       summary: Create a mock evaluation
