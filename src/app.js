@@ -2,8 +2,9 @@
 
 const express = require('express');
 const evaluationsRouter = require('./routes/evaluations');
+const { readInfoVersion } = require('./openapi-version');
 
-const API_VERSION = '1.0.1';
+const API_VERSION = readInfoVersion();
 
 function createApp() {
   const app = express();

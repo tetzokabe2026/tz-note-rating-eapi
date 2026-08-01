@@ -5,6 +5,9 @@
   "private": true,
   "main": "src/server.js",
   "scripts": {
+    "sync-oas": "cp openapi.yaml docs/openapi.yaml",
+    "prestart": "npm run sync-oas",
+    "pretest": "npm run sync-oas",
     "start": "node src/server.js",
     "test": "node --test test/**/*.test.js"
   },
