@@ -3,6 +3,8 @@
 const express = require('express');
 const evaluationsRouter = require('./routes/evaluations');
 
+const API_VERSION = '1.0.1';
+
 function createApp() {
   const app = express();
 
@@ -12,6 +14,10 @@ function createApp() {
 
   app.get('/health', (_req, res) => {
     res.status(200).json({ status: 'ok' });
+  });
+
+  app.get('/version', (_req, res) => {
+    res.status(200).json({ version: API_VERSION });
   });
 
   app.use('/evaluations', evaluationsRouter);

@@ -48,6 +48,7 @@ OpenAPI 契約を正とします。
 | `POST` | `/evaluations` | `201` + evaluation |
 | `GET` | `/evaluations/{id}` | `200` + evaluation |
 | `DELETE` | `/evaluations/{id}` | `204` |
+| `GET` | `/version` | `200` `{"version":"1.0.1"}` |
 | `GET` | `/health` | `200` `{"status":"ok"}`（運用用） |
 
 ## Quick start（Prism MOCK）

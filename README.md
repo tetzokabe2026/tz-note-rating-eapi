@@ -56,6 +56,7 @@ The OpenAPI contract is the source of truth.
 | `POST` | `/evaluations` | `201` + evaluation |
 | `GET` | `/evaluations/{id}` | `200` + evaluation |
 | `DELETE` | `/evaluations/{id}` | `204` |
+| `GET` | `/version` | `200` `{"version":"1.0.1"}` |
 | `GET` | `/health` | `200` `{"status":"ok"}` (ops only; not a business resource) |
 
 Evaluations on Production are stored **in memory** for the process lifetime and are cleared on scale-in or cold start.
