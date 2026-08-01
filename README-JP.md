@@ -7,7 +7,7 @@ OpenAPI 契約を正とします。
 
 | | |
 |---|---|
-| **Version** | 1.1.0 |
+| **Version** | 1.0.1 |
 | **OpenAPI** | [openapi.yaml](openapi.yaml) |
 | **API Catalog (Swagger UI)** | https://tetzokabe2026.github.io/tz-note-rating-eapi/ |
 | **Prism MOCK（アプリ試験用）** | https://evaluation-oas-prism-i7pbbhm3ja-an.a.run.app |
@@ -39,7 +39,6 @@ OpenAPI 契約を正とします。
 | `usefulness` | integer | 1–5 |
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
-| `vocabulary-richness` | integer | 1–5 |
 
 ## Endpoints
 

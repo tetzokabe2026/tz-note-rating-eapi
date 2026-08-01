@@ -7,7 +7,7 @@ The OpenAPI contract is the source of truth.
 
 | | |
 |---|---|
-| **Version** | 1.1.0 |
+| **Version** | 1.0.1 |
 | **OpenAPI** | [openapi.yaml](openapi.yaml) |
 | **API Catalog (Swagger UI)** | https://tetzokabe2026.github.io/tz-note-rating-eapi/ |
 | **Prism MOCK (use for app testing)** | https://evaluation-oas-prism-i7pbbhm3ja-an.a.run.app |
@@ -41,7 +41,6 @@ The OpenAPI contract is the source of truth.
 | `usefulness` | integer | 1–5 |
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
-| `vocabulary-richness` | integer | 1–5 |
 
 ### Request body (`POST /evaluations`)
 

@@ -5,12 +5,11 @@
 
 Define an OpenAPI Specification for a simple Mock API that evaluates technical notes.
 
-The API returns random five-level ratings for the following four evaluation items:
+The API returns random five-level ratings for the following three evaluation items:
 
 - Usefulness
 - Importance
 - Credibility
-- Vocabulary Richness
 
 This document defines the API contract only.
 
@@ -114,8 +113,7 @@ Example response:
   "eval-id": "eval-12345",
   "usefulness": 4,
   "importance": 2,
-  "credibility": 5,
-  "vocabulary-richness": 3
+  "credibility": 5
 }
 ```
 
@@ -159,8 +157,7 @@ Example response:
   "eval-id": "eval-12345",
   "usefulness": 3,
   "importance": 5,
-  "credibility": 4,
-  "vocabulary-richness": 2
+  "credibility": 4
 }
 ```
 
@@ -206,7 +203,6 @@ The response schema must contain exactly the following fields:
 | `usefulness` | integer | Yes | 1 to 5 |
 | `importance` | integer | Yes | 1 to 5 |
 | `credibility` | integer | Yes | 1 to 5 |
-| `vocabulary-richness` | integer | Yes | 1 to 5 |
 
 OpenAPI schema example:
 
@@ -219,7 +215,6 @@ Evaluation:
     - usefulness
     - importance
     - credibility
-    - vocabulary-richness
   properties:
     eval-id:
       type: string
@@ -240,14 +235,9 @@ Evaluation:
       minimum: 1
       maximum: 5
       example: 5
-    vocabulary-richness:
-      type: integer
-      minimum: 1
-      maximum: 5
-      example: 3
 ```
 
-Do not add evaluation items beyond these four.
+Do not add other evaluation items.
 
 ---
 
@@ -363,7 +353,6 @@ It must define:
 - Usefulness rating
 - Importance rating
 - Credibility rating
-- Vocabulary Richness rating
 - Rating minimum of 1
 - Rating maximum of 5
 - Validation error response
@@ -399,7 +388,7 @@ The OpenAPI definition is complete when:
 - `body` has `minLength: 20`.
 - `body` has `maxLength: 255`.
 - POST and GET responses contain `eval-id`.
-- The four ratings are integers from 1 to 5.
+- The three ratings are integers from 1 to 5.
 - A structured `400 Validation Error` response is defined.
 - No real implementation is required.
 - No database, SAPI, external API, framework, runtime, or container is specified.
