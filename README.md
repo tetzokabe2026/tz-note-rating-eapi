@@ -7,7 +7,7 @@ The OpenAPI contract is the source of truth.
 
 | | |
 |---|---|
-| **Version** | 1.0.1 |
+| **Version** | [`openapi.yaml`](openapi.yaml) → `info.version` |
 | **OpenAPI** | [openapi.yaml](openapi.yaml) |
 | **API Catalog (Swagger UI)** | https://tetzokabe2026.github.io/tz-note-rating-eapi/ |
 | **Prism MOCK (use for app testing)** | https://evaluation-oas-prism-i7pbbhm3ja-an.a.run.app |
@@ -42,6 +42,7 @@ The OpenAPI contract is the source of truth.
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
 | `elegance` | integer | 1–5 |
+| `originality` | integer | 1–5 |
 
 ### Request body (`POST /evaluations`)
 
@@ -56,7 +57,7 @@ The OpenAPI contract is the source of truth.
 | `POST` | `/evaluations` | `201` + evaluation |
 | `GET` | `/evaluations/{id}` | `200` + evaluation |
 | `DELETE` | `/evaluations/{id}` | `204` |
-| `GET` | `/version` | `200` `{"version":"1.0.1"}` |
+| `GET` | `/version` | `200` + `{"version":"<info.version>"}` |
 | `GET` | `/health` | `200` `{"status":"ok"}` (ops only; not a business resource) |
 
 Evaluations on Production are stored **in memory** for the process lifetime and are cleared on scale-in or cold start.
@@ -111,16 +112,31 @@ Production URL (Cloud Run):
 
 `https://evaluation-mock-api-47730621722.asia-northeast1.run.app`
 
+## Version (single source)
+
+Edit **`info.version` in [`openapi.yaml`](openapi.yaml) only.** Everything else derives from it:
+
+| Consumer | How |
+|----------|-----|
+| Express `GET /version` | Reads `openapi.yaml` at startup ([`src/openapi-version.js`](src/openapi-version.js)) |
+| Tests | Same reader |
+| GitHub Pages catalog UI | Loads version from `docs/openapi.yaml` in the browser |
+| OAS examples / schema | YAML anchor `*api_version` in `openapi.yaml` |
+
+Sync the Pages copy before commit:
+
+```bash
+npm run sync-oas
+```
+
+(`npm test` / `npm start` run this automatically via `pretest` / `prestart`.)
+
 ## GitHub Pages (API catalog hosting)
 
 - Branch: `master` / folder: `/docs`
 - Public URL: https://tetzokabe2026.github.io/tz-note-rating-eapi/
 
-When you update the OpenAPI contract:
-
-```bash
-cp openapi.yaml docs/openapi.yaml
-```
+When you update the OpenAPI contract, run `npm run sync-oas` so [`docs/openapi.yaml`](docs/openapi.yaml) matches the root spec.
 
 ## Notes
 

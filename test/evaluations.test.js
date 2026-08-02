@@ -4,7 +4,10 @@ const { describe, it, beforeEach } = require('node:test');
 const assert = require('node:assert/strict');
 const request = require('supertest');
 const { createApp } = require('../src/app');
+const { readInfoVersion } = require('../src/openapi-version');
 const store = require('../src/store');
+
+const API_VERSION = readInfoVersion();
 
 const VALID_BODY = 'Cursor agents execute commands in an isolated environment.';
 
@@ -31,7 +34,7 @@ describe('Evaluation Mock API', () => {
   it('GET /version returns API version', async () => {
     const res = await request(app).get('/version');
     assert.equal(res.status, 200);
-    assert.deepEqual(res.body, { version: '1.0.1' });
+    assert.deepEqual(res.body, { version: API_VERSION });
   });
 
   it('POST /evaluations creates an evaluation and GET returns the same', async () => {
@@ -46,6 +49,7 @@ describe('Evaluation Mock API', () => {
     assertRating(createRes.body.importance);
     assertRating(createRes.body.credibility);
     assertRating(createRes.body.elegance);
+    assertRating(createRes.body.originality);
 
     const getRes = await request(app).get(`/evaluations/${createRes.body['eval-id']}`);
     assert.equal(getRes.status, 200);

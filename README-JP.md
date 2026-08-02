@@ -7,7 +7,7 @@ OpenAPI 契約を正とします。
 
 | | |
 |---|---|
-| **Version** | 1.0.1 |
+| **Version** | [`openapi.yaml`](openapi.yaml) → `info.version` |
 | **OpenAPI** | [openapi.yaml](openapi.yaml) |
 | **API Catalog (Swagger UI)** | https://tetzokabe2026.github.io/tz-note-rating-eapi/ |
 | **Prism MOCK（アプリ試験用）** | https://evaluation-oas-prism-i7pbbhm3ja-an.a.run.app |
@@ -40,6 +40,7 @@ OpenAPI 契約を正とします。
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
 | `elegance` | integer | 1–5 |
+| `originality` | integer | 1–5 |
 
 ## Endpoints
 
@@ -48,7 +49,7 @@ OpenAPI 契約を正とします。
 | `POST` | `/evaluations` | `201` + evaluation |
 | `GET` | `/evaluations/{id}` | `200` + evaluation |
 | `DELETE` | `/evaluations/{id}` | `204` |
-| `GET` | `/version` | `200` `{"version":"1.0.1"}` |
+| `GET` | `/version` | `200` + `{"version":"<info.version>"}` |
 | `GET` | `/health` | `200` `{"status":"ok"}`（運用用） |
 
 ## Quick start（Prism MOCK）
@@ -70,6 +71,25 @@ npm start
 ```
 
 localhost は API カタログのサーバー一覧には含めません。
+
+## バージョン（単一ソース）
+
+**[`openapi.yaml`](openapi.yaml) の `info.version` だけを編集**してください。他はそこから派生します。
+
+| 利用先 | 方法 |
+|--------|------|
+| Express `GET /version` | 起動時に `openapi.yaml` を読む（[`src/openapi-version.js`](src/openapi-version.js)） |
+| テスト | 同上 |
+| GitHub Pages カタログ | ブラウザが `docs/openapi.yaml` から表示 |
+| OAS 内の example | YAML アンカー `*api_version` |
+
+コミット前に Pages 用コピーを同期:
+
+```bash
+npm run sync-oas
+```
+
+（`npm test` / `npm start` でも `pretest` / `prestart` 経由で自動実行されます。）
 
 ## Notes
 
