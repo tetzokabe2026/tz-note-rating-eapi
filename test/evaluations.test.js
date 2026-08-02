@@ -49,6 +49,7 @@ describe('Evaluation Mock API', () => {
     assertRating(createRes.body.importance);
     assertRating(createRes.body.credibility);
     assertRating(createRes.body.reality);
+    assertRating(createRes.body.sensitive);
 
     const getRes = await request(app).get(`/evaluations/${createRes.body['eval-id']}`);
     assert.equal(getRes.status, 200);
