@@ -12,6 +12,7 @@ function createRandomRatings() {
     importance: randomRating(),
     credibility: randomRating(),
     reality: randomRating(),
+    sensitive: randomRating(),
   };
 }
 
