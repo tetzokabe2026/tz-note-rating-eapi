@@ -13,6 +13,7 @@ function createRandomRatings() {
     credibility: randomRating(),
     emotional: randomRating(),
     humor: randomRating(),
+    reality: randomRating(),
   };
 }
 
