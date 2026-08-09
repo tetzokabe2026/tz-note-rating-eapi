@@ -39,8 +39,6 @@ OpenAPI 契約を正とします。
 | `usefulness` | integer | 1–5 |
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
-| `vocabulary` | integer | 1–5 |
-| `emotional` | integer | 1–5 |
 
 ## Endpoints
 
