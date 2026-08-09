@@ -41,7 +41,6 @@ The OpenAPI contract is the source of truth.
 | `usefulness` | integer | 1–5 |
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
-| `humor` | integer | 1–5 |
 
 ### Request body (`POST /evaluations`)
 
