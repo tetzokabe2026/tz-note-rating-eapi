@@ -1,10 +1,10 @@
 openapi: 3.0.3
 info:
   title: Evaluation Mock API
-  version: &api_version 1.0.15
+  version: &api_version 1.0.16
   description: >
     Mock Experience API that returns random five-level ratings
-    (usefulness, importance, credibility, emotional, humor) for technical notes.
+    (usefulness, importance, credibility, emotional, humor, reality) for technical notes.
 
     IMPORTANT: The Cloud Run URL is Production. Do NOT use Production for
     application development or integration testing. USE the Prism mock server
@@ -56,6 +56,7 @@ paths:
                 credibility: 5
                 emotional: 3
                 humor: 3
+                reality: 3
         '400':
           description: Validation error
           content:
@@ -96,6 +97,7 @@ paths:
                 credibility: 4
                 emotional: 3
                 humor: 3
+                reality: 3
         '404':
           description: Evaluation not found
           content:
@@ -151,6 +153,7 @@ components:
         - credibility
         - emotional
         - humor
+        - reality
       properties:
         eval-id:
           type: string
@@ -177,6 +180,11 @@ components:
           maximum: 5
           example: 3
         humor:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 3
+        reality:
           type: integer
           minimum: 1
           maximum: 5
