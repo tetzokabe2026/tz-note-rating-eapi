@@ -12,7 +12,6 @@ function createRandomRatings() {
     importance: randomRating(),
     credibility: randomRating(),
     vocabulary: randomRating(),
-    emotional: randomRating(),
   };
 }
 
