@@ -40,6 +40,7 @@ OpenAPI 契約を正とします。
 | `importance` | integer | 1–5 |
 | `credibility` | integer | 1–5 |
 | `sense` | integer | 1–5 |
+| `humor` | integer | 1–5 |
 
 ## Endpoints
 
