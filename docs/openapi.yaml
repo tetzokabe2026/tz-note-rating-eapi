@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Evaluation Mock API
-  version: &api_version 1.5.2
+  version: &api_version 1.5.3
   description: >
     Mock Experience API that returns random five-level ratings
     (usefulness, importance, credibility, sense, humor, volume, negativity) for technical notes.
