@@ -11,10 +11,6 @@ function createRandomRatings() {
     usefulness: randomRating(),
     importance: randomRating(),
     credibility: randomRating(),
-    sense: randomRating(),
-    humor: randomRating(),
-    volume: randomRating(),
-    negativity: randomRating(),
   };
 }
 
