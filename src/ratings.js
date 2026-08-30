@@ -14,6 +14,7 @@ function createRandomRatings() {
     sense: randomRating(),
     humor: randomRating(),
     volume: randomRating(),
+    negativity: randomRating(),
   };
 }
 

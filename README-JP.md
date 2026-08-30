@@ -42,6 +42,7 @@ OpenAPI 契約を正とします。
 | `sense` | integer | 1–5 |
 | `humor` | integer | 1–5 |
 | `volume` | integer | 1–5 |
+| `negativity` | integer | 1–5 |
 
 ## Endpoints
 
